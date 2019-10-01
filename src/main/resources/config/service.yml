@@ -1,0 +1,6 @@
+# Singleton service factory configuration/IoC injection
+singletons:
+- com.networknt.configserver.provider.IProvider:
+  - com.networknt.configserver.provider.FileSystemProviderImpl
+#  - com.networknt.configserver.provider.GitProviderImpl
+#   - com.networknt.configserver.provider.VaultProviderImpl
