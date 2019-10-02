@@ -1,0 +1,4 @@
+enableProxy: ${proxy.enableProxy:false}
+hostname: ${proxy.hostname:localhost}
+port: ${proxy.port:3128}
+scheme: ${proxy.scheme:http}

@@ -1,0 +1,34 @@
+# ConfigServer configurations:
+# The default values can be replaced using values.yml file.
+
+##### Vault Server Provider Configs #####
+#vaultServerUri to connect with vault server and get the configs.
+vaultServerUri: ${configserver.vaultServerUri:http://localhost:8200}
+
+
+
+##### File System Provider Configs #####
+# The service configs (values.yml, certs & files) will be fetched from below specified location while using FileSystem provider.
+# FileSystem provider is recommended be used for local environment testing only.
+# Example configs dir created in local : /light-service-configs
+serviceConfigsDir: ${configserver.serviceConfigsDir:/light-service-configs}
+
+
+
+##### Git Provider Configs #####
+# The following properties are used by GitProviderImpl to fetch the configs from a Git repository.
+#Git API Uri or Host name (Ex: https://api.github.com).
+gitApiHost: ${configserver.gitApiHost:https://api.github.com}
+
+# Git API context root: "repos" for public github.com & "api/v3/repos" for enterprise github
+gitApiContextRoot: ${configserver.gitApiContextRoot:repos}
+
+# Git repository owner name(Ex: networknt).
+gitRepoOwner: ${configserver.gitRepoOwner:networknt}
+
+# Git repository name is optional. If provided, recommended naming convention is "light-service-configs-{projectName}-{environment}".
+# Code will replace the placeholders {projectName} and {environment} with the values from request path.
+# Repo name without those placeholder will cause projectName and environment values from request path to be ignored.
+# If repo name is missing, then it will be constructed using projectName and environment
+# from the request as light-service-configs-{projectName}-{environment} for each request.
+gitRepoName: ${configserver.gitRepoName:light-service-configs-project1-dev}

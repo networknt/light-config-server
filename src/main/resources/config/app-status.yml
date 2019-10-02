@@ -1,0 +1,15 @@
+ACS00001:
+  statusCode: 500
+  code: ACS00001
+  message: BACKEND_ERROR
+  description: Error while calling backend [%s|%s]
+ACS00002:
+  statusCode: 500
+  code: ACS00002
+  message: RESPONSE_PARSING_ERROR
+  description: Error while parsing response from backend
+ACS00003:
+  statusCode: 500
+  code: ACS00003
+  message: BACKEND_LOGIN_ERROR
+  description: Failed to login to backend; please check your credentials.
