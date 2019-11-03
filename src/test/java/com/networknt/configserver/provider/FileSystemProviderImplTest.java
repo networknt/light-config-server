@@ -86,7 +86,7 @@ public class FileSystemProviderImplTest {
         ServiceConfigs serviceConfigs = fileSystemProvider.getServiceCertificates("xyz123", service);
         Map response = (HashMap) serviceConfigs.getConfigProperties();
         Assert.assertEquals(1, response.size());
-        PowerMockito.verifyStatic(VerificationModeFactory.times(2));
+        PowerMockito.verifyStatic(FileSystemProviderImplTest.class, VerificationModeFactory.times(2));
         Paths.get(anyString());
     }
 
@@ -97,7 +97,7 @@ public class FileSystemProviderImplTest {
         ServiceConfigs serviceConfigs = fileSystemProvider.getServiceFiles("xyz123", service);
         Map response = (HashMap) serviceConfigs.getConfigProperties();
         Assert.assertEquals(1, response.size());
-        PowerMockito.verifyStatic(VerificationModeFactory.times(2));
+        PowerMockito.verifyStatic(FileSystemProviderImplTest.class, VerificationModeFactory.times(2));
         Paths.get(anyString());
     }
 
