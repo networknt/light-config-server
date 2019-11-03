@@ -44,7 +44,7 @@ import static org.mockito.Mockito.*;
 
 @RunWith(PowerMockRunner.class)
 @PrepareForTest({Config.class, VaultProviderImpl.class, HttpClientBuilder.class, ClientResponse.class, ObjectMapper.class})
-@PowerMockIgnore({"javax.*", "org.xml.sax.*", "org.apache.log4j.*"})
+@PowerMockIgnore({"com.sun.org.apache.xerces.*", "javax.xml.*", "org.xml.*", "org.w3c.*", "javax.crypto.*"})
 public class VaultProviderImplTest {
     private static IProvider vaultProvider = new VaultProviderImpl();
     private static ObjectMapper objectMapper = Mockito.mock(ObjectMapper.class);
