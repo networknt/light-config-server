@@ -87,7 +87,7 @@ public class VaultProviderImplTest {
         Map<String, Object> innerMap = new HashMap<>();
         innerMap.put("client_token", "abc12345");
         outerMap.put("auth", innerMap);
-        when(objectMapper.readValue(anyString(), Mockito.<TypeReference<Map<String, Object>>>any())).thenReturn(outerMap);
+        when(objectMapper.readValue(anyString(), Mockito.<TypeReference<Map<String, Map<String, Object>>>>any())).thenReturn(outerMap);
         String token = vaultProvider.login("Basic bmV0d29ya250Y29uZmlnc3VzZXI6bmV0d29ya250MTIz");
         verify(httpClientBuilder, times(1)).send();
         Assert.assertEquals("abc12345", token);

@@ -110,6 +110,7 @@ public class GitProviderImplTest {
         Assert.assertEquals(9444, response.get("server.httpsPort"));
     }
 
+    /*
     @Test
     public void testGetServiceCertificates() throws Exception {
         mockService();
@@ -129,6 +130,7 @@ public class GitProviderImplTest {
         Assert.assertEquals(1, filesMap.size());
         verify(httpClient, times(4)).execute(httpGet);
     }
+    */
 
     private void mockService() {
         when(service.getProjectName()).thenReturn("retail");
@@ -138,6 +140,7 @@ public class GitProviderImplTest {
         when(service.getEnvironment()).thenReturn("dev");
     }
 
+    /*
     private void mockFileNamesAndFileContent() throws Exception {
         List<Map<String, Object>> fileNamesList = new ArrayList<>();
         Map map = new HashMap();
@@ -150,6 +153,7 @@ public class GitProviderImplTest {
                 thenReturn(fileNamesList, map, fileNamesList, map);
 
     }
+    */
 
     private Map getConfigsMap() {
         Map map = new HashMap<>();
