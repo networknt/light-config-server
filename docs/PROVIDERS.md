@@ -135,6 +135,27 @@ To use this provider:
     configserver.vaultServerUri: http://localhost:8200
     ```
 
+### 4. Url Provider
+This provider fetch configs from centralized Nginx, and the config structure is just like File System Provider. You can manage real configs with GIT or SVN, or File System.
+
+
+To use this provider:
+- Create a GIT or SVN repository, or just /light-servie-configs directory. config nginx e.g.
+```
+server {
+    server_name git.xlongwei.com;
+    location /light-service-configs/ {
+        alias /soft/gitdata/light-service-configs/;
+        autoindex on;
+    }
+}
+```
+- Using -Dconfigserver.serviceConfigsHost system property, or Set configserver.serviceConfigsHost and configserver.serviceConfigsDir property in Config Server's config properties to point to this configserver e.g. 
+```
+configserver.serviceConfigsHost: https://git.xlongwei.com
+configserver.serviceConfigsDir: /light-service-configs
+```
+
 ###### More info on Vault:
 - [What is it](https://www.vaultproject.io)
 - [How to install](https://learn.hashicorp.com/vault/getting-started/install)
