@@ -17,6 +17,7 @@
 package com.networknt.configserver.provider;
 
 import com.networknt.configserver.model.Service;
+import com.networknt.configserver.model.ServiceConfig;
 import com.networknt.configserver.model.ServiceConfigs;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.networknt.config.Config;
@@ -67,5 +68,7 @@ public interface IProvider {
 
     // get services from provider backend
     public List<Service> searchServices(String authToken, String projectName) throws ApiException;
+
+    default public List<String> saveServiceConfigs(String authToken, Service service, List<ServiceConfig> serviceConfigs){return List.of();};
 
 }
