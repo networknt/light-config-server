@@ -26,14 +26,12 @@ import static org.bson.codecs.configuration.CodecRegistries.fromRegistries;
 public class  MongoDBProviderImplTest {
   String configKey = "files/example/globals/0.0.1/dev";
   MongoClient mongoClient = MongoClients.create("mongodb://root:example@0.0.0.0:27017");
-//MongoClient mongoClient = MongoClients.create("mongodb://root:zeOmcfnK9d@eadp-mongodb-0.dev-eadpapiops-operations-ns:27017");
   MongoDatabase database = mongoClient.getDatabase("configServer");
   MongoCollection<Document> collection = database.getCollection("configs").withCodecRegistry(fromRegistries(MongoClientSettings.getDefaultCodecRegistry(),
           fromProviders(PojoCodecProvider.builder().automatic(true).build())));
 
   @Test
   public void testInsert() throws IOException {
-
     Document insert = new Document("_id", configKey);
     List<Document> collect = Files.list(FileSystems.getDefault().getPath("src/test/resources/config")).map(path -> {
       try {
