@@ -5,6 +5,6 @@ singletons:
   # Using mock for JUnit test and comment them out by default.
   # - com.networknt.configserver.provider.GitProviderImpl
   # - com.networknt.configserver.provider.VaultProviderImpl
-  - com.networknt.configserver.provider.MongoDBProviderImpl
+    - com.networknt.configserver.provider.MongoDBProviderImpl
 - com.networknt.server.StartupHookProvider:
-  - com.networknt.configserver.db.MongoStartupHookProvider
+    - com.networknt.configserver.db.MongoStartupHookProvider
