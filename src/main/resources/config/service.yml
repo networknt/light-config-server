@@ -7,4 +7,5 @@ singletons:
   # - com.networknt.configserver.provider.VaultProviderImpl
   - com.networknt.configserver.provider.MongoDBProviderImpl
 - com.networknt.server.StartupHookProvider:
-  - com.networknt.configserver.db.MongoStartupHookProvider
+  - com.networknt.configserver.db.MongoStartupHook
+  - com.networknt.configserver.db.MongoShutdownHook
