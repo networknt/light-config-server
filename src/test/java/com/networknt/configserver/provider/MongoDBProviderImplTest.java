@@ -8,9 +8,11 @@ import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.Filters;
 import com.mongodb.client.model.UpdateOptions;
+import com.mongodb.client.result.DeleteResult;
 import com.networknt.configserver.model.ServiceConfig;
 import org.bson.Document;
 import org.bson.codecs.pojo.PojoCodecProvider;
+import org.bson.conversions.Bson;
 import org.junit.Test;
 
 import java.io.IOException;
@@ -19,6 +21,7 @@ import java.nio.file.Files;
 import java.util.*;
 import java.util.stream.Collectors;
 
+import static com.mongodb.client.model.Filters.eq;
 import static com.mongodb.client.model.Updates.set;
 import static org.bson.codecs.configuration.CodecRegistries.fromProviders;
 import static org.bson.codecs.configuration.CodecRegistries.fromRegistries;
@@ -43,11 +46,14 @@ public class  MongoDBProviderImplTest {
       return null;
     }).filter(Objects::nonNull).collect(Collectors.toList());
     insert.append("configs", collect);
+    // delete the original record to avoid duplication.
+    Bson filter = eq("_id", configKey);
+    DeleteResult result = collection.deleteOne(filter);
     collection.insertOne(insert);
   }
 
   @Test
-  public void testInsert2() throws IOException {
+  public void testUpdate() throws IOException {
 
     Document insert = new Document("_id", configKey);
     List<Document> collect = Files.list(FileSystems.getDefault().getPath("src/test/resources/config")).map(path -> {
@@ -60,11 +66,9 @@ public class  MongoDBProviderImplTest {
       }
       return null;
     }).filter(Objects::nonNull).collect(Collectors.toList());
-//    Document document = new Document("name", collect.get(0).getName()).append("content", collect.get(0).getContent());
-
-    collection.updateOne(Filters.eq(configKey), set("a", "b"), new UpdateOptions().upsert(true));
-//    insert.append("configs", collect);
-//    collection.updateOne(Filters.eq(configKey), set("configs", collect), new UpdateOptions().upsert(true));
+      collection.updateOne(eq(configKey), set("a", "b"), new UpdateOptions().upsert(true));
+      insert.append("configs", collect);
+      collection.updateOne(Filters.eq(configKey), set("configs", collect), new UpdateOptions().upsert(true));
   }
 
   @Test
