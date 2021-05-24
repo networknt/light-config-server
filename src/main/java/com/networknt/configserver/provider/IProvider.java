@@ -54,21 +54,21 @@ public interface IProvider {
     public static final ObjectMapper mapper = Config.getInstance().getMapper();
 
     // login to provider backend
-    public String login(String authorization) throws ApiException;
+    String login(String authorization) throws ApiException;
 
     // get configs from provider backend
-    public ServiceConfigs getServiceConfigs(String authToken, Service service) throws ApiException;
+    ServiceConfigs getServiceConfigs(String authToken, Service service) throws ApiException;
 
     // get configs from provider backend
-    public ServiceConfigs getServiceCertificates(String authToken, Service service) throws ApiException;
+    ServiceConfigs getServiceCertificates(String authToken, Service service) throws ApiException;
 
     // get configs from provider backend
-    public ServiceConfigs getServiceFiles(String authToken, Service service) throws ApiException;
+    ServiceConfigs getServiceFiles(String authToken, Service service) throws ApiException;
 
 
     // get services from provider backend
-    public List<Service> searchServices(String authToken, String projectName) throws ApiException;
+    List<Service> searchServices(String authToken, String projectName) throws ApiException;
 
-    default public List<String> saveServiceConfigs(String authToken, Service service, List<ServiceConfig> serviceConfigs){return List.of();};
+    List<String> saveServiceConfigs(String authToken, Service service, List<ServiceConfig> serviceConfigs);
 
 }

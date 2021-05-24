@@ -2,5 +2,6 @@
 singletons:
 - com.networknt.configserver.provider.IProvider:
   - com.networknt.configserver.provider.FileSystemProviderImpl
-  - com.networknt.configserver.provider.GitProviderImpl
-#   - com.networknt.configserver.provider.VaultProviderImpl
+  # Using mock for JUnit test and comment them out by default.
+  # - com.networknt.configserver.provider.GitProviderImpl
+  # - com.networknt.configserver.provider.VaultProviderImpl

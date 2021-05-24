@@ -46,7 +46,7 @@ import java.util.*;
 
 @RunWith(PowerMockRunner.class)
 @PrepareForTest({GitProviderImpl.class, Config.class, ObjectMapper.class, HttpClients.class, EntityUtils.class})
-@PowerMockIgnore({"com.sun.org.apache.xerces.*", "javax.xml.*", "org.xml.*", "org.w3c.*", "jdk.internal.reflect.*", "javax.crypto.*"})
+@PowerMockIgnore({"com.sun.org.apache.xerces.*", "javax.xml.*", "org.xml.*", "org.w3c.*"})
 public class GitProviderImplTest {
     private static IProvider gitProvider = new GitProviderImpl();
     private static ObjectMapper objectMapper = Mockito.mock(ObjectMapper.class);
