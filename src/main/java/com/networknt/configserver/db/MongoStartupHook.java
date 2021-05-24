@@ -11,6 +11,8 @@ import com.networknt.server.StartupHookProvider;
 import org.bson.codecs.configuration.CodecProvider;
 import org.bson.codecs.configuration.CodecRegistry;
 import org.bson.codecs.pojo.PojoCodecProvider;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Map;
 
@@ -20,17 +22,17 @@ import static org.bson.codecs.configuration.CodecRegistries.fromRegistries;
 /**
  * Created by stevehu on 2017-03-09.
  */
-public class MongoStartupHookProvider implements StartupHookProvider {
-
+public class MongoStartupHook implements StartupHookProvider {
+    private static final Logger logger = LoggerFactory.getLogger(MongoStartupHook.class);
+    public static MongoClient mongoClient;
     public static MongoDatabase db;
     private static final String MONGO_DB_URI = "mongoDBUri";
     private static final String MONGO_DB_NAME = "mongoDBName";
 
 
     public void onStartup() {
-        System.out.println("MongoStartupHookProvider is called");
+        if(logger.isInfoEnabled()) logger.info("MongoStartupHook.onStartup is called");
         initDataSource();
-        System.out.println("MongoStartupHookProvider db = " + db);
     }
 
     static void initDataSource() {
@@ -45,7 +47,7 @@ public class MongoStartupHookProvider implements StartupHookProvider {
                 .applyConnectionString(new ConnectionString(url))
                 .codecRegistry(pojoCodecRegistry)
                 .build();
-        MongoClient mongoClient = MongoClients.create(settings);
+        mongoClient = MongoClients.create(settings);
         db = mongoClient.getDatabase(dbName);
     }
 }

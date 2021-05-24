@@ -4,7 +4,7 @@ import com.mongodb.client.MongoCollection;
 import com.mongodb.client.model.UpdateOptions;
 import com.networknt.config.Config;
 import com.networknt.configserver.constants.ConfigServerConstants;
-import com.networknt.configserver.db.MongoStartupHookProvider;
+import com.networknt.configserver.db.MongoStartupHook;
 import com.networknt.configserver.model.Service;
 import com.networknt.configserver.model.ServiceConfig;
 import com.networknt.configserver.model.ServiceConfigs;
@@ -116,7 +116,7 @@ public class MongoDBProviderImpl implements IProvider {
     List<String> failedConfigKeys = new ArrayList<>();
     Map<String, Object> configServerConfig = Config.getInstance().getJsonMapConfig(ConfigServerConstants.CONFIG_NAME);
     String collectionName = (String) configServerConfig.get(MONGO_COLLECTION_NAME);
-    MongoCollection<Document> collection = MongoStartupHookProvider.db.getCollection(collectionName);
+    MongoCollection<Document> collection = MongoStartupHook.db.getCollection(collectionName);
 
     Map<String, List<ServiceConfig>> configsByKey = new HashMap<>();
     for (ServiceConfig serviceConfig : serviceConfigs) {
@@ -150,7 +150,7 @@ public class MongoDBProviderImpl implements IProvider {
   private Map<String, Object> getConfigs(String configKey) {
     Map<String, Object> configServerConfig = Config.getInstance().getJsonMapConfig(ConfigServerConstants.CONFIG_NAME);
     String collectionName = (String) configServerConfig.get(MONGO_COLLECTION_NAME);
-    MongoCollection<Document> collection = MongoStartupHookProvider.db.getCollection(collectionName);
+    MongoCollection<Document> collection = MongoStartupHook.db.getCollection(collectionName);
     Map<String, Object> configsMap = new HashMap<>();
 
     Document document = new Document("_id", configKey);
