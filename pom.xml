@@ -32,6 +32,7 @@
         <version.exec-maven>1.6.0</version.exec-maven>
         <version.maven-surefire>2.22.2</version.maven-surefire>
         <version.maven-source>3.1.0</version.maven-source>
+        <version.mongodb>3.12.8</version.mongodb>
     </properties>
 
     <dependencies>
@@ -127,6 +128,11 @@
             <artifactId>logback-classic</artifactId>
             <version>${version.logback}</version>
         </dependency>
+        <dependency>
+            <groupId>org.mongodb</groupId>
+            <artifactId>mongo-java-driver</artifactId>
+            <version>${version.mongodb}</version>
+        </dependency>
 
         <!-- Test Dependencies -->
         <dependency>
@@ -201,7 +207,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>${project.main.class}</mainClass>
+                            <mainClass>com.networknt.server.Server</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
