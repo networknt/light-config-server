@@ -38,7 +38,7 @@ public class  MongoDBProviderImplTest {
     Document insert = new Document("_id", configKey);
     List<Document> collect = Files.list(FileSystems.getDefault().getPath("src/test/resources/config")).map(path -> {
       try {
-        String content = Files.readAllLines(path).stream().collect(Collectors.joining());
+        String content = Files.readString(path);
         return new Document("configName", path.getFileName().toString()).append("content", content);
       } catch (IOException e) {
         e.printStackTrace();
@@ -58,7 +58,7 @@ public class  MongoDBProviderImplTest {
     Document insert = new Document("_id", configKey);
     List<Document> collect = Files.list(FileSystems.getDefault().getPath("src/test/resources/config")).map(path -> {
       try {
-        String content = Files.readAllLines(path).stream().collect(Collectors.joining());
+        String content = Files.readString(path);
         ServiceConfig serviceConfig = new ServiceConfig("server.yml", content);
         return serviceConfig.toBson();
       } catch (IOException e) {
@@ -101,4 +101,6 @@ public class  MongoDBProviderImplTest {
     ServiceConfig serviceConfig = mapper.convertValue(map, ServiceConfig.class);
     System.out.println(serviceConfig);
   }
+
+
 }
