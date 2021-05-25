@@ -19,6 +19,7 @@ package com.networknt.configserver.provider;
 import com.networknt.configserver.constants.ConfigServerConstants;
 import com.networknt.configserver.model.ProxyConfig;
 import com.networknt.configserver.model.Service;
+import com.networknt.configserver.model.ServiceConfig;
 import com.networknt.configserver.model.ServiceConfigs;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.networknt.config.Config;
@@ -223,6 +224,11 @@ public class GitProviderImpl implements IProvider {
         serviceConfigs.setConfigProperties(configsMap);
 
         return serviceConfigs;
+    }
+
+    @Override
+    public List<String> saveServiceConfigs(String authToken, Service service, List<ServiceConfig> serviceConfigs) {
+        return List.of();
     }
 
     private String getFileContent(String authToken, String filePath) throws ApiException {

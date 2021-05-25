@@ -18,6 +18,7 @@ package com.networknt.configserver.provider;
 
 import com.networknt.configserver.constants.ConfigServerConstants;
 import com.networknt.configserver.model.Service;
+import com.networknt.configserver.model.ServiceConfig;
 import com.networknt.configserver.model.ServiceConfigs;
 import com.networknt.config.Config;
 import com.networknt.exception.ApiException;
@@ -181,6 +182,11 @@ public class FileSystemProviderImpl implements IProvider {
     @Override
     public List<Service> searchServices(String authToken, String projectName) throws ApiException {
         return null;
+    }
+
+    @Override
+    public List<String> saveServiceConfigs(String authToken, Service service, List<ServiceConfig> serviceConfigs) {
+        return List.of();
     }
 
     private String buildConfigPath(Service service, String configType, String name, String version) {

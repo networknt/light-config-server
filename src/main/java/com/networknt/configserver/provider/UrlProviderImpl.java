@@ -20,6 +20,7 @@ import java.util.concurrent.atomic.AtomicReference;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import com.networknt.configserver.model.ServiceConfig;
 import org.jose4j.json.internal.json_simple.JSONValue;
 import org.yaml.snakeyaml.Yaml;
 
@@ -102,7 +103,12 @@ public class UrlProviderImpl implements IProvider {
 	public List<Service> searchServices(String authToken, String projectName) throws ApiException {
 		return null;
 	}
-	
+
+	@Override
+    public List<String> saveServiceConfigs(String authToken, Service service, List<ServiceConfig> serviceConfigs) {
+	    return List.of();
+    }
+
 	private ServiceConfigs getFileConfigs(String authToken, Service service, String type) throws ApiException {
 		Map<String, Object> configsMap = new HashMap<String, Object>();
         ServiceConfigs serviceConfigs = new ServiceConfigs();
