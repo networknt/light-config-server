@@ -57,6 +57,7 @@ handlers:
   - com.networknt.configserver.handler.GetServiceConfigsHandler@GetServiceConfigsHandler
   - com.networknt.configserver.handler.GetServiceCertificatesHandler@GetServiceCertificatesHandler
   - com.networknt.configserver.handler.GetServiceFilesHandler@GetServiceFilesHandler
+  - com.networknt.configserver.handler.PatchServiceConfigsHandler@PatchServiceConfigsHandler
 
 
 
@@ -75,48 +76,53 @@ chains:
     - validator
 
 paths:
-  - path: '/config-server/services'
+  - path: '/services'
     method: 'GET'
     exec:
       - default
       - SearchServicesHandler
 
-  - path: '/config-server/configs/{project_name}/{project_version}/{service_name}/{service_version}/{environment}'
+  - path: '/configs/{project_name}/{project_version}/{service_name}/{service_version}/{environment}'
     method: 'GET'
     exec:
       - default
       - GetServiceConfigsHandler
 
-  - path: '/config-server/certs/{project_name}/{project_version}/{service_name}/{service_version}/{environment}'
+  - path: '/certs/{project_name}/{project_version}/{service_name}/{service_version}/{environment}'
     method: 'GET'
     exec:
       - default
       - GetServiceCertificatesHandler
 
-  - path: '/config-server/files/{project_name}/{project_version}/{service_name}/{service_version}/{environment}'
+  - path: '/files/{project_name}/{project_version}/{service_name}/{service_version}/{environment}'
     method: 'GET'
     exec:
       - default
       - GetServiceFilesHandler
 
+  - path: '/{project_name}/{project_version}/{service_name}/{service_version}/{environment}'
+    method: 'PATCH'
+    exec:
+      - default
+      - PatchServiceConfigsHandler
 
-  - path: '/config-server/health'
+  - path: '/health/com.networknt.config-server-1.0.0'
     method: 'get'
     exec:
       - health
 
-  - path: '/config-server/info'
+  - path: '/server/info'
     method: 'get'
     exec:
       - info
 
 
-  - path: '/config-server/spec.yaml'
+  - path: '/spec.yaml'
     method: 'get'
     exec:
       - spec
 
-  - path: '/config-server/specui.html'
+  - path: '/specui.html'
     method: 'get'
     exec:
       - swaggerui

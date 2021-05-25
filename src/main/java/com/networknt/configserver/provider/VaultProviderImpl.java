@@ -18,6 +18,7 @@ package com.networknt.configserver.provider;
 
 import com.networknt.configserver.constants.ConfigServerConstants;
 import com.networknt.configserver.model.Service;
+import com.networknt.configserver.model.ServiceConfig;
 import com.networknt.configserver.model.ServiceConfigs;
 import com.networknt.configserver.model.VaultLoginRequest;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -286,6 +287,11 @@ public class VaultProviderImpl implements IProvider {
             }
         }
         return servicesList;
+    }
+
+    @Override
+    public List<String> saveServiceConfigs(String authToken, Service service, List<ServiceConfig> serviceConfigs) {
+        return List.of();
     }
 
     private List<String> getServices(String clientToken, String endpoint) throws ApiException {
