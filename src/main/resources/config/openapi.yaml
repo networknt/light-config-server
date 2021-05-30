@@ -1,8 +1,8 @@
 openapi: 3.0.0
 
 servers:
-- description: SwaggerHub API Auto Mocking
-  url: https://virtserver.swaggerhub.com/config-server
+- description: Light Config Server
+  url: https://config.neworknt.com
 info:
   description: Light Config Server API
   version: "1.0.0"
