@@ -166,7 +166,7 @@ public class MongoDBProviderImpl implements IProvider {
       configs.forEach(config -> {
         byte[] content = config.getString("content").getBytes();
         String encodedContent = Base64.getMimeEncoder().encodeToString(content);
-        configsMap.put(config.getString("configName"), encodedContent);
+        configsMap.put(config.getString("name"), encodedContent);
       });
 
     } catch (Exception e) {
