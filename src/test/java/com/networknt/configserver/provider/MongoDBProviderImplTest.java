@@ -39,7 +39,7 @@ public class  MongoDBProviderImplTest {
     List<Document> collect = Files.list(FileSystems.getDefault().getPath("src/test/resources/config")).map(path -> {
       try {
         String content = Files.readString(path);
-        return new Document("configName", path.getFileName().toString()).append("content", content);
+        return new Document("name", path.getFileName().toString()).append("content", content);
       } catch (IOException e) {
         e.printStackTrace();
       }
@@ -83,7 +83,7 @@ public class  MongoDBProviderImplTest {
       configs.forEach(config -> {
         byte[] content = config.getString("content").getBytes();
         String encodedContent = Base64.getMimeEncoder().encodeToString(content);
-        configsMap.put(config.getString("configName"), encodedContent);
+        configsMap.put(config.getString("name"), encodedContent);
       });
     }
   }
