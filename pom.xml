@@ -163,6 +163,11 @@
             <artifactId>chaos-monkey</artifactId>
             <version>${version.light-4j}</version>
         </dependency>
+        <dependency>
+            <groupId>com.networknt</groupId>
+            <artifactId>portal-registry</artifactId>
+            <version>${version.light-4j}</version>
+        </dependency>
 
         <!-- Test Dependencies -->
         <dependency>
