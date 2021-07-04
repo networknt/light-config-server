@@ -128,12 +128,14 @@ paths:
     method: 'get'
     exec:
       - default
+      - health
 
   # This is the pass through readiness health check endpoint for the backend API
   - path: '/health/readiness/${server.serviceId}'
     method: 'get'
     exec:
       - default
+      - health
 
   - path: '/server/info'
     method: 'get'
