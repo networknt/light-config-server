@@ -21,6 +21,7 @@ import com.networknt.configserver.model.Service;
 import com.networknt.configserver.model.ServiceConfig;
 import com.networknt.configserver.model.ServiceConfigs;
 import com.networknt.configserver.model.VaultLoginRequest;
+import com.networknt.configserver.model.Authorization;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.networknt.client.Http2Client;
 import com.networknt.client.builder.HttpClientBuilder;
@@ -77,12 +78,13 @@ public class VaultProviderImpl implements IProvider {
     /**
      * Login to Vault Server
      *
-     * @param authorization: Basic authorization string (Base64 encoded username/password for Vault server)
+     * @param auth: Authorization wtih basic authorization string (Base64 encoded username/password for Vault server)
      * @return client token
      * @throws ApiException when user is not authorized or can not login
      */
     @Override
-    public String login(String authorization) throws ApiException {
+    public String login(Authorization auth) throws ApiException {
+        final String authorization = auth.getAuthorization();
         Map<String, Object> config = Config.getInstance().getJsonMapConfig(ConfigServerConstants.CONFIG_NAME);
         String username = null;
 

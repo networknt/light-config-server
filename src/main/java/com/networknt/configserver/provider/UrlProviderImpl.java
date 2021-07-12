@@ -20,7 +20,9 @@ import java.util.concurrent.atomic.AtomicReference;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import com.networknt.configserver.model.Authorization;
 import com.networknt.configserver.model.ServiceConfig;
+import io.undertow.server.HttpServerExchange;
 import org.jose4j.json.internal.json_simple.JSONValue;
 import org.yaml.snakeyaml.Yaml;
 
@@ -67,8 +69,8 @@ public class UrlProviderImpl implements IProvider {
     private long connectionCacheTTLms = 10000;
     
 	@Override
-	public String login(String authorization) throws ApiException {
-		return authorization;
+	public String login(Authorization auth) throws ApiException {
+		return auth.getAuthorization();
 	}
 
 	@Override

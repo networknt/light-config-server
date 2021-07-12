@@ -17,6 +17,7 @@
 package com.networknt.configserver.provider;
 
 import com.networknt.configserver.constants.ConfigServerConstants;
+import com.networknt.configserver.model.Authorization;
 import com.networknt.configserver.model.Service;
 import com.networknt.configserver.model.ServiceConfig;
 import com.networknt.configserver.model.ServiceConfigs;
@@ -82,7 +83,7 @@ public class FileSystemProviderImpl implements IProvider {
 
 
     @Override
-    public String login(String authorization) throws ApiException {
+    public String login(Authorization auth) throws ApiException {
         return null;
     }
 

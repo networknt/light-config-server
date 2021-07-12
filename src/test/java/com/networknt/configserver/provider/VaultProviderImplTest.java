@@ -16,6 +16,7 @@
 
 package com.networknt.configserver.provider;
 
+import com.networknt.configserver.model.Authorization;
 import com.networknt.configserver.model.Service;
 import com.networknt.configserver.model.ServiceConfigs;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -94,7 +95,9 @@ public class VaultProviderImplTest {
         innerMap.put("client_token", "abc12345");
         outerMap.put("auth", innerMap);
         when(objectMapper.readValue(anyString(), Mockito.<TypeReference<Map<String, Map<String, Object>>>>any())).thenReturn(outerMap);
-        String token = vaultProvider.login("Basic bmV0d29ya250Y29uZmlnc3VzZXI6bmV0d29ya250MTIz");
+        Authorization auth = new Authorization();
+        auth.setAuthorization("Basic bmV0d29ya250Y29uZmlnc3VzZXI6bmV0d29ya250MTIz");
+        String token = vaultProvider.login(auth);
         verify(httpClientBuilder, times(1)).send();
         Assert.assertEquals("abc12345", token);
     }

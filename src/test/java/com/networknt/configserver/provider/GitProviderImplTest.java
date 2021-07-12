@@ -16,6 +16,7 @@
 
 package com.networknt.configserver.provider;
 
+import com.networknt.configserver.model.Authorization;
 import com.networknt.configserver.model.ProxyConfig;
 import com.networknt.configserver.model.Service;
 import com.networknt.configserver.model.ServiceConfigs;
@@ -93,7 +94,9 @@ public class GitProviderImplTest {
 
     @Test
     public void testLogin() throws Exception {
-        String token = gitProvider.login("Bearer b4285895f0e67");
+        Authorization auth = new Authorization();
+        auth.setAuthorization("Bearer b4285895f0e67");
+        String token = gitProvider.login(auth);
         Assert.assertEquals("Bearer b4285895f0e67", token);
     }
 
