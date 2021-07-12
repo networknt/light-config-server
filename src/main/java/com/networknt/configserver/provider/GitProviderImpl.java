@@ -17,10 +17,7 @@
 package com.networknt.configserver.provider;
 
 import com.networknt.configserver.constants.ConfigServerConstants;
-import com.networknt.configserver.model.ProxyConfig;
-import com.networknt.configserver.model.Service;
-import com.networknt.configserver.model.ServiceConfig;
-import com.networknt.configserver.model.ServiceConfigs;
+import com.networknt.configserver.model.*;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.networknt.config.Config;
 import com.networknt.exception.ApiException;
@@ -110,12 +107,13 @@ public class GitProviderImpl implements IProvider {
     /**
      * Login to Git repo
      *
-     * @param authorization: Authorization string (Git personal access tokens)
+     * @param auth: Authorization (Git personal access tokens)
      * @return client token
      * @throws ApiException when user is not authorized or can not login
      */
     @Override
-    public String login(String authorization) throws ApiException {
+    public String login(Authorization auth) throws ApiException {
+        final String authorization = auth.getAuthorization();
         if (authorization != null && authorization.toLowerCase().startsWith("bearer")) {
             return authorization;
         } else {

@@ -5,11 +5,15 @@ import com.mongodb.client.model.UpdateOptions;
 import com.networknt.config.Config;
 import com.networknt.configserver.constants.ConfigServerConstants;
 import com.networknt.configserver.db.MongoStartupHook;
+import com.networknt.configserver.model.Authorization;
 import com.networknt.configserver.model.Service;
 import com.networknt.configserver.model.ServiceConfig;
 import com.networknt.configserver.model.ServiceConfigs;
 import com.networknt.exception.ApiException;
+import com.networknt.status.Status;
 import org.bson.Document;
+import org.jose4j.jwt.JwtClaims;
+import org.jose4j.jwt.MalformedClaimException;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -23,8 +27,20 @@ public class MongoDBProviderImpl implements IProvider {
   ConfigKeyResolver resolver = new ConfigKeyResolver();
 
   @Override
-  public String login(String authorization) throws ApiException {
-    return null;
+  public String login(Authorization auth) throws ApiException {
+    String serviceId = null;
+    JwtClaims claims = auth.getClaims();
+    if (claims != null && claims.hasClaim("service")) {
+      try {
+        serviceId = claims.getStringClaimValue("service");
+      } catch (MalformedClaimException e) {
+        throw new ApiException(new Status("ERR11404"));
+      }
+    }
+    if (serviceId == null) {
+      throw new ApiException(new Status("ERR11404"));
+    }
+    return serviceId;
   }
 
   /**
@@ -37,6 +53,9 @@ public class MongoDBProviderImpl implements IProvider {
    */
   @Override
   public ServiceConfigs getServiceConfigs(String authToken, Service service) throws ApiException {
+    if(!service.getServiceName().equals(authToken)) {
+      throw new ApiException(new Status("ERR11403", authToken, service.getServiceName()));
+    }
     ServiceConfigs serviceConfigs = new ServiceConfigs();
     serviceConfigs.setConfigProperties(new HashMap<String, Object>());
     serviceConfigs.setService(service);
@@ -68,6 +87,9 @@ public class MongoDBProviderImpl implements IProvider {
    */
   @Override
   public ServiceConfigs getServiceCertificates(String authToken, Service service) throws ApiException {
+    if(!service.getServiceName().equals(authToken)) {
+      throw new ApiException(new Status("ERR11403", authToken, service.getServiceName()));
+    }
     return getServiceConfigs(service, ConfigServerConstants.CERTS);
   }
 
@@ -81,6 +103,9 @@ public class MongoDBProviderImpl implements IProvider {
    */
   @Override
   public ServiceConfigs getServiceFiles(String authToken, Service service) throws ApiException {
+    if(!service.getServiceName().equals(authToken)) {
+      throw new ApiException(new Status("ERR11403", authToken, service.getServiceName()));
+    }
     return getServiceConfigs(service, ConfigServerConstants.FILES);
   }
 
@@ -112,7 +137,10 @@ public class MongoDBProviderImpl implements IProvider {
   }
 
   @Override
-  public List<String> saveServiceConfigs(String authToken, Service service, List<ServiceConfig> serviceConfigs) {
+  public List<String> saveServiceConfigs(String authToken, Service service, List<ServiceConfig> serviceConfigs) throws ApiException {
+    if(!service.getServiceName().equals(authToken)) {
+      throw new ApiException(new Status("ERR11403", authToken, service.getServiceName()));
+    }
     List<String> failedConfigKeys = new ArrayList<>();
     Map<String, Object> configServerConfig = Config.getInstance().getJsonMapConfig(ConfigServerConstants.CONFIG_NAME);
     String collectionName = (String) configServerConfig.get(MONGO_COLLECTION_NAME);

@@ -7,7 +7,9 @@ import com.networknt.config.Config;
 import com.networknt.configserver.constants.ConfigServerConstants;
 import com.networknt.configserver.model.Service;
 import com.networknt.configserver.model.ServiceConfig;
+import com.networknt.configserver.helper.AuthorizationHelper;
 import com.networknt.configserver.provider.IProvider;
+import com.networknt.exception.ApiException;
 import com.networknt.handler.LightHttpHandler;
 import com.networknt.httpstring.ContentType;
 import com.networknt.status.Status;
@@ -30,8 +32,12 @@ public class PatchServiceConfigsHandler implements LightHttpHandler {
         IProvider provider = IProvider.getInstance();
 
         // Login to provider backend and get the token
-        final String authorization = exchange.getRequestHeaders().getFirst(Headers.AUTHORIZATION);
-        String clientToken = provider.login(authorization);
+        String clientToken = null;
+        try {
+            clientToken = provider.login(AuthorizationHelper.getAuthorization(exchange));
+        } catch (ApiException e) {
+            this.setExchangeStatus(exchange, e.getStatus());
+        }
 
         Service service = getService(exchange);
         Object configStr = exchange.getAttachment(BodyHandler.REQUEST_BODY);

@@ -16,6 +16,7 @@
 
 package com.networknt.configserver.provider;
 
+import com.networknt.configserver.model.Authorization;
 import com.networknt.configserver.model.Service;
 import com.networknt.configserver.model.ServiceConfig;
 import com.networknt.configserver.model.ServiceConfigs;
@@ -54,7 +55,7 @@ public interface IProvider {
     public static final ObjectMapper mapper = Config.getInstance().getMapper();
 
     // login to provider backend
-    String login(String authorization) throws ApiException;
+    String login(Authorization auth) throws ApiException;
 
     // get configs from provider backend
     ServiceConfigs getServiceConfigs(String authToken, Service service) throws ApiException;
@@ -69,6 +70,6 @@ public interface IProvider {
     // get services from provider backend
     List<Service> searchServices(String authToken, String projectName) throws ApiException;
 
-    List<String> saveServiceConfigs(String authToken, Service service, List<ServiceConfig> serviceConfigs);
+    List<String> saveServiceConfigs(String authToken, Service service, List<ServiceConfig> serviceConfigs) throws ApiException;
 
 }

@@ -1,5 +1,7 @@
 package com.networknt.configserver.provider;
 
+import com.networknt.configserver.model.Authorization;
+import com.networknt.configserver.model.ServiceConfig;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mongodb.MongoClientSettings;
 import com.mongodb.client.MongoClient;
@@ -9,10 +11,11 @@ import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.Filters;
 import com.mongodb.client.model.UpdateOptions;
 import com.mongodb.client.result.DeleteResult;
-import com.networknt.configserver.model.ServiceConfig;
 import org.bson.Document;
 import org.bson.codecs.pojo.PojoCodecProvider;
 import org.bson.conversions.Bson;
+import org.jose4j.jwt.JwtClaims;
+import org.junit.Assert;
 import org.junit.Test;
 
 import java.io.IOException;
@@ -32,9 +35,21 @@ public class  MongoDBProviderImplTest {
   MongoDatabase database = mongoClient.getDatabase("configServer");
   MongoCollection<Document> collection = database.getCollection("configs").withCodecRegistry(fromRegistries(MongoClientSettings.getDefaultCodecRegistry(),
           fromProviders(PojoCodecProvider.builder().automatic(true).build())));
+  private static IProvider MongoDBProvider = new MongoDBProviderImpl();
+
+  @Test
+  public void testLogin() throws Exception {
+    Authorization auth = new Authorization();
+    JwtClaims jwtClaims = new JwtClaims();
+    jwtClaims.setClaim("service", "0100");
+    auth.setClaims(jwtClaims);
+    String token = MongoDBProvider.login(auth);
+    Assert.assertEquals("0100", token);
+  }
 
   @Test
   public void testInsert() throws IOException {
+
     Document insert = new Document("_id", configKey);
     List<Document> collect = Files.list(FileSystems.getDefault().getPath("src/test/resources/config")).map(path -> {
       try {
