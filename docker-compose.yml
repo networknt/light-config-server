@@ -1,7 +1,7 @@
 version: "3.3"
 services:
 #  config-server:
-#    image: networknt/config-server
+#    image: dtestage-dtr.sunlifecorp.com/eadpapiops/config-server
 #    ports:
 #      - 8443:8443
 #    depends_on:
@@ -21,3 +21,8 @@ services:
     environment:
       ME_CONFIG_MONGODB_ADMINUSERNAME: root
       ME_CONFIG_MONGODB_ADMINPASSWORD: example
+      ME_CONFIG_BASICAUTH_USERNAME: admin
+      ME_CONFIG_BASICAUTH_PASSWORD: admin
+      ME_CONFIG_MONGODB_URL: "mongodb://root:example@mongo:27017/"
+    depends_on:
+      - mongo
